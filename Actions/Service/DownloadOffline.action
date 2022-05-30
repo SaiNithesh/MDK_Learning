@@ -1,0 +1,69 @@
+{
+    "Service": "/MDKLearningApp/Services/ES5.service",
+    "DefiningRequests": [{
+            "Name": "BookingCollection",
+            "Query": "BookingCollection"
+        },
+        {
+            "Name": "CarrierCollection",
+            "Query": "CarrierCollection"
+        },
+        {
+            "Name": "TravelagencyCollection",
+            "Query": "TravelagencyCollection"
+        },
+        {
+            "Name": "TravelAgencies",
+            "Query": "TravelAgencies"
+        },
+        {
+            "Name": "TravelAgencies_DQ",
+            "Query": "TravelAgencies_DQ"
+        },
+        {
+            "Name": "VL_BOOK_SMOKER_ES",
+            "Query": "VL_BOOK_SMOKER_ES"
+        },
+        {
+            "Name": "VL_VL_BOOK_SMOKER_ID_ES",
+            "Query": "VL_VL_BOOK_SMOKER_ID_ES"
+        },
+        {
+            "Name": "VL_MY_CURR_ES",
+            "Query": "VL_MY_CURR_ES"
+        },
+        {
+            "Name": "VL_BOOK_ADDRESS_COUNTRY_DEEP_ES",
+            "Query": "VL_BOOK_ADDRESS_COUNTRY_DEEP_ES"
+        },
+        {
+            "Name": "VL_CT_FLIGHT_DETAILS_AIRPORT_TO_ES",
+            "Query": "VL_CT_FLIGHT_DETAILS_AIRPORT_TO_ES"
+        },
+        {
+            "Name": "VL_ACTION_PARAMETER_AIRLINE_ID_ES",
+            "Query": "VL_ACTION_PARAMETER_AIRLINE_ID_ES"
+        },
+        {
+            "Name": "SubscriptionCollection",
+            "Query": "SubscriptionCollection"
+        },
+        {
+            "Name": "NotificationCollection",
+            "Query": "NotificationCollection"
+        },
+        {
+            "Name": "FlightCollection",
+            "Query": "FlightCollection"
+        },
+        {
+            "Name": "FlightCollection_DQ",
+            "Query": "FlightCollection_DQ"
+        }
+    ],
+    "_Type": "Action.Type.OfflineOData.Download",
+    "ActionResult": {
+        "_Name": "sync"
+    },
+    "OnFailure": "/MDKLearningApp/Actions/Service/SyncFailureMessage.action"
+}

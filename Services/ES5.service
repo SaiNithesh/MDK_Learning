@@ -1,0 +1,9 @@
+{
+    "DestinationName": "ES5",
+    "OfflineEnabled": true,
+    "LanguageURLParam": "",
+    "OnlineOptions": {},
+    "PathSuffix": "/sap/opu/odata/IWFND/RMTSAMPLEFLIGHT/",
+    "SourceType": "Mobile",
+    "ServiceUrl":""
+}

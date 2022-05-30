@@ -1,0 +1,10 @@
+{
+    "_Type": "Action.Type.OfflineOData.Close",
+    "Service": "/MDKLearningApp/Services/ES5.service",
+    "Force": true,
+    "ActionResult": {
+        "_Name": "close"
+    },
+    "OnSuccess": "/MDKLearningApp/Actions/Service/CloseOfflineSuccessMessage.action",
+    "OnFailure": "/MDKLearningApp/Actions/Service/CloseOfflineFailureMessage.action"
+}

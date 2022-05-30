@@ -1,0 +1,48 @@
+{
+	"Controls": [
+		{
+			"_Type": "Control.Type.SectionedTable",
+			"_Name": "SectionedTable0",
+			"Sections": [
+				{
+					"_Type": "Section.Type.ContactCell",
+					"Target": {
+						"Service": "/MDKLearning/Services/CAPM_NORTHWIND.service",
+						"EntitySet": "Suppliers",
+						"QueryOptions": ""
+					},
+					"_Name": "SectionContactCell0",
+					"Visible": true,
+					"EmptySection": {
+						"FooterVisible": false
+					},
+					"DataPaging": {
+						"ShowLoadingIndicator": false,
+						"PageSize": 50
+					},
+					"ContactCell": {
+						"ContextMenu": {
+							"PerformFirstActionWithFullSwipe": true,
+							"Items": [
+							]
+						},
+						"DetailImage": "",
+						"Headline": "{companyName}",
+						"Subheadline": "{contactName}",
+						"Description": "{contactTitle}",
+						"ActivityItems": [
+						]
+					},
+					"Search": {
+						"Enabled": true,
+						"BarcodeScanner": true
+					}
+				}
+			]
+		}
+	],
+	"_Type": "Page",
+	"_Name": "Suppliers_List",
+	"Caption": "Suppliers_List",
+	"PrefersLargeCaption": true
+}

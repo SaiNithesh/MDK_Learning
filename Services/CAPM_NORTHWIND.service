@@ -1,0 +1,6 @@
+{
+	"DestinationName": "CAPM_NORTHWIND",
+	"PathSuffix": "/service/northwind/",
+	"OfflineEnabled": false,
+	"SourceType": "Mobile"
+}

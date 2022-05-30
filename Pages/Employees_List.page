@@ -1,0 +1,53 @@
+{
+	"Controls": [
+		{
+			"_Type": "Control.Type.SectionedTable",
+			"_Name": "SectionedTable0",
+			"Sections": [
+				{
+					"_Type": "Section.Type.ContactCell",
+					"Target": {
+						"Service": "/MDKLearning/Services/ES5.service",
+						"EntitySet": "SEPMRA_C_OVW_Employees"
+					},
+					"_Name": "SectionContactCell0",
+					"Visible": true,
+					"EmptySection": {
+						"FooterVisible": false
+					},
+					"DataPaging": {
+						"ShowLoadingIndicator": false,
+						"PageSize": 50
+					},
+					"ContactCell": {
+						"ContextMenu": {
+							"PerformFirstActionWithFullSwipe": true,
+							"Items": [
+							]
+						},
+						"DetailImage": "",
+						"Headline": "{FullName}",
+						"Subheadline": "{Employee}",
+						"Description": "{SystemUser}",
+						"ActivityItems": [
+							{
+								"_Name": "SectionContactCell0ActivityItems0",
+								"ActivityType": "Phone",
+								"ActivityValue": "{MobilePhoneNumber}"
+							},
+							{
+								"_Name": "SectionContactCell0ActivityItems1",
+								"ActivityType": "Email",
+								"ActivityValue": "{EmailAddress}"
+							}
+						]
+					}
+				}
+			]
+		}
+	],
+	"_Type": "Page",
+	"_Name": "Employees_List",
+	"Caption": "Employees_List",
+	"PrefersLargeCaption": true
+}

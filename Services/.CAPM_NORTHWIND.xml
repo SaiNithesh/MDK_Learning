@@ -1,0 +1,633 @@
+<?xml version="1.0" encoding="utf-8"?><Edmx xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Version="4.0">
+  <Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Capabilities.V1.xml">
+    <Include Alias="Capabilities" Namespace="Org.OData.Capabilities.V1"/>
+  </Reference>
+  <Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml">
+    <Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/>
+  </Reference>
+  <Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml">
+    <Include Alias="Core" Namespace="Org.OData.Core.V1"/>
+  </Reference>
+  <Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/HTML5.xml">
+    <Include Alias="HTML5" Namespace="com.sap.vocabularies.HTML5.v1"/>
+  </Reference>
+  <Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/UI.xml">
+    <Include Alias="UI" Namespace="com.sap.vocabularies.UI.v1"/>
+  </Reference>
+  <DataServices>
+    <Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="capService">
+      <EntityContainer Name="EntityContainer">
+        <EntitySet Name="Products" EntityType="capService.Products">
+          <NavigationPropertyBinding Path="to_Supplier" Target="Suppliers"/>
+          <NavigationPropertyBinding Path="to_Category" Target="Categories"/>
+          <NavigationPropertyBinding Path="SiblingEntity" Target="Products"/>
+        </EntitySet>
+        <EntitySet Name="Suppliers" EntityType="capService.Suppliers">
+          <NavigationPropertyBinding Path="to_Product" Target="Products"/>
+        </EntitySet>
+        <EntitySet Name="Categories" EntityType="capService.Categories">
+          <NavigationPropertyBinding Path="to_Product" Target="Products"/>
+        </EntitySet>
+      </EntityContainer>
+      <EntityType Name="Products">
+        <Key>
+          <PropertyRef Name="productID"/>
+          <PropertyRef Name="IsActiveEntity"/>
+        </Key>
+        <Property Name="productID" Type="Edm.Int32" Nullable="false"/>
+        <Property Name="productName" Type="Edm.String" MaxLength="40"/>
+        <Property Name="quantityPerUnit" Type="Edm.String" MaxLength="20"/>
+        <Property Name="unitPrice" Type="Edm.Decimal" Scale="4" Precision="19"/>
+        <Property Name="unitsInStock" Type="Edm.Int32"/>
+        <Property Name="unitsOnOrder" Type="Edm.Int32"/>
+        <Property Name="reorderLevel" Type="Edm.Int32"/>
+        <Property Name="discontinued" Type="Edm.String"/>
+        <NavigationProperty Name="to_Supplier" Type="capService.Suppliers">
+          <ReferentialConstraint Property="to_Supplier_supplierID" ReferencedProperty="supplierID"/>
+        </NavigationProperty>
+        <Property Name="to_Supplier_supplierID" Type="Edm.Int32"/>
+        <NavigationProperty Name="to_Category" Type="capService.Categories">
+          <ReferentialConstraint Property="to_Category_categoryID" ReferencedProperty="categoryID"/>
+        </NavigationProperty>
+        <Property Name="to_Category_categoryID" Type="Edm.Int32"/>
+        <Property Name="IsActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="true"/>
+        <Property Name="HasActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
+        <Property Name="HasDraftEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
+        <NavigationProperty Name="DraftAdministrativeData" Type="capService.DraftAdministrativeData" ContainsTarget="true"/>
+        <NavigationProperty Name="SiblingEntity" Type="capService.Products"/>
+      </EntityType>
+      <EntityType Name="Suppliers">
+        <Key>
+          <PropertyRef Name="supplierID"/>
+        </Key>
+        <Property Name="supplierID" Type="Edm.Int32" Nullable="false"/>
+        <Property Name="companyName" Type="Edm.String" MaxLength="40" Nullable="false"/>
+        <Property Name="contactName" Type="Edm.String" MaxLength="30"/>
+        <Property Name="contactTitle" Type="Edm.String" MaxLength="30"/>
+        <Property Name="address" Type="Edm.String" MaxLength="60"/>
+        <Property Name="city" Type="Edm.String" MaxLength="15"/>
+        <Property Name="region" Type="Edm.String" MaxLength="15"/>
+        <Property Name="postalCode" Type="Edm.String" MaxLength="15"/>
+        <Property Name="country" Type="Edm.String" MaxLength="15"/>
+        <Property Name="phone" Type="Edm.String" MaxLength="24"/>
+        <Property Name="fax" Type="Edm.String" MaxLength="24"/>
+        <Property Name="homePage" Type="Edm.String"/>
+        <NavigationProperty Name="to_Product" Type="capService.Products">
+          <ReferentialConstraint Property="to_Product_productID" ReferencedProperty="productID"/>
+        </NavigationProperty>
+        <Property Name="to_Product_productID" Type="Edm.Int32"/>
+      </EntityType>
+      <EntityType Name="Categories">
+        <Key>
+          <PropertyRef Name="categoryID"/>
+        </Key>
+        <Property Name="categoryID" Type="Edm.Int32" Nullable="false"/>
+        <Property Name="categoryName" Type="Edm.String" MaxLength="15"/>
+        <Property Name="description" Type="Edm.String"/>
+        <NavigationProperty Name="to_Product" Type="capService.Products">
+          <ReferentialConstraint Property="to_Product_productID" ReferencedProperty="productID"/>
+        </NavigationProperty>
+        <Property Name="to_Product_productID" Type="Edm.Int32"/>
+      </EntityType>
+      <EntityType Name="DraftAdministrativeData">
+        <Key>
+          <PropertyRef Name="DraftUUID"/>
+        </Key>
+        <Property Name="DraftUUID" Type="Edm.Guid" Nullable="false"/>
+        <Property Name="CreationDateTime" Type="Edm.DateTimeOffset" Precision="7"/>
+        <Property Name="CreatedByUser" Type="Edm.String" MaxLength="256"/>
+        <Property Name="DraftIsCreatedByMe" Type="Edm.Boolean"/>
+        <Property Name="LastChangeDateTime" Type="Edm.DateTimeOffset" Precision="7"/>
+        <Property Name="LastChangedByUser" Type="Edm.String" MaxLength="256"/>
+        <Property Name="InProcessByUser" Type="Edm.String" MaxLength="256"/>
+        <Property Name="DraftIsProcessedByMe" Type="Edm.Boolean"/>
+      </EntityType>
+      <Action Name="draftPrepare" IsBound="true" EntitySetPath="in">
+        <Parameter Name="in" Type="capService.Products"/>
+        <Parameter Name="SideEffectsQualifier" Type="Edm.String"/>
+        <ReturnType Type="capService.Products"/>
+      </Action>
+      <Action Name="draftActivate" IsBound="true" EntitySetPath="in">
+        <Parameter Name="in" Type="capService.Products"/>
+        <ReturnType Type="capService.Products"/>
+      </Action>
+      <Action Name="draftEdit" IsBound="true" EntitySetPath="in">
+        <Parameter Name="in" Type="capService.Products"/>
+        <Parameter Name="PreserveChanges" Type="Edm.Boolean"/>
+        <ReturnType Type="capService.Products"/>
+      </Action>
+      <Annotations Target="capService.Products">
+        <Annotation Term="Common.SemanticKey">
+          <Collection>
+            <PropertyPath>productID</PropertyPath>
+          </Collection>
+        </Annotation>
+        <Annotation Term="UI.SelectionFields">
+          <Collection>
+            <PropertyPath>to_Supplier_supplierID</PropertyPath>
+            <PropertyPath>to_Category_categoryID</PropertyPath>
+          </Collection>
+        </Annotation>
+        <Annotation Term="UI.HeaderInfo">
+          <Record Type="UI.HeaderInfoType">
+            <PropertyValue Property="TypeName" String="Product"/>
+            <PropertyValue Property="TypeNamePlural" String="Products"/>
+            <PropertyValue Property="Title">
+              <Record Type="UI.DataField">
+                <PropertyValue Property="Value" Path="productName"/>
+              </Record>
+            </PropertyValue>
+            <PropertyValue Property="Description">
+              <Record Type="UI.DataField">
+                <PropertyValue Property="Value" Path="productID"/>
+              </Record>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+        <Annotation Term="UI.LineItem">
+          <Collection>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="productID"/>
+              <Annotation Term="HTML5.CssDefaults">
+                <Record Type="HTML5.CssDefaultsType">
+                  <PropertyValue Property="width" String="100%"/>
+                </Record>
+              </Annotation>
+              <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="productName"/>
+              <Annotation Term="HTML5.CssDefaults">
+                <Record Type="HTML5.CssDefaultsType">
+                  <PropertyValue Property="width" String="100%"/>
+                </Record>
+              </Annotation>
+              <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="quantityPerUnit"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="unitPrice"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="discontinued"/>
+              <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+              <PropertyValue Property="Criticality" EnumMember="UI.CriticalityType/VeryNegative"/>
+            </Record>
+          </Collection>
+        </Annotation>
+        <Annotation Term="UI.Facets">
+          <Collection>
+            <Record Type="UI.ReferenceFacet">
+              <PropertyValue Property="Label" String="Product Details"/>
+              <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#ProdDetail"/>
+            </Record>
+            <Record Type="UI.CollectionFacet">
+              <PropertyValue Property="Label" String="Supplier"/>
+              <PropertyValue Property="Facets">
+                <Collection>
+                  <Record Type="UI.ReferenceFacet">
+                    <PropertyValue Property="Label" String="General Info"/>
+                    <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#SuppDetail"/>
+                  </Record>
+                  <Record Type="UI.ReferenceFacet">
+                    <PropertyValue Property="Label" String="Location Details"/>
+                    <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#SuppLocationDetail"/>
+                  </Record>
+                  <Record Type="UI.ReferenceFacet">
+                    <PropertyValue Property="Label" String="Contact Details"/>
+                    <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#SuppContactDetail"/>
+                  </Record>
+                </Collection>
+              </PropertyValue>
+            </Record>
+            <Record Type="UI.ReferenceFacet">
+              <PropertyValue Property="Label" String="Category"/>
+              <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#CateDetail"/>
+            </Record>
+          </Collection>
+        </Annotation>
+        <Annotation Term="UI.FieldGroup" Qualifier="ProdDetail">
+          <Record Type="UI.FieldGroupType">
+            <PropertyValue Property="Data">
+              <Collection>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="productName"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="unitsInStock"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="quantityPerUnit"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="reorderLevel"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="unitsOnOrder"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="discontinued"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+        <Annotation Term="UI.FieldGroup" Qualifier="SuppDetail">
+          <Record Type="UI.FieldGroupType">
+            <PropertyValue Property="Data">
+              <Collection>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="to_Supplier/supplierID"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="to_Supplier/companyName"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="to_Supplier/contactName"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="to_Supplier/contactTitle"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+        <Annotation Term="UI.FieldGroup" Qualifier="SuppLocationDetail">
+          <Record Type="UI.FieldGroupType">
+            <PropertyValue Property="Data">
+              <Collection>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="to_Supplier/city"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="to_Supplier/region"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="to_Supplier/country"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="to_Supplier/postalCode"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+        <Annotation Term="UI.FieldGroup" Qualifier="SuppContactDetail">
+          <Record Type="UI.FieldGroupType">
+            <PropertyValue Property="Data">
+              <Collection>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="to_Supplier/phone"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="to_Supplier/fax"/>
+                </Record>
+                <Record Type="UI.DataFieldWithUrl">
+                  <PropertyValue Property="Url" Path="to_Supplier/homePage"/>
+                  <PropertyValue Property="Value" Path="to_Supplier/homePage"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+        <Annotation Term="UI.FieldGroup" Qualifier="CateDetail">
+          <Record Type="UI.FieldGroupType">
+            <PropertyValue Property="Data">
+              <Collection>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="to_Category/categoryID"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="to_Category/categoryName"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="to_Category/description"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="capService.EntityContainer/Products">
+        <Annotation Term="Common.DraftRoot">
+          <Record Type="Common.DraftRootType">
+            <PropertyValue Property="ActivationAction" String="capService.draftActivate"/>
+            <PropertyValue Property="EditAction" String="capService.draftEdit"/>
+            <PropertyValue Property="PreparationAction" String="capService.draftPrepare"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Capabilities.DeepInsertSupport">
+          <Record Type="Capabilities.DeepInsertSupportType">
+            <PropertyValue Property="Supported" Bool="true"/>
+            <PropertyValue Property="ContentIDSupported" Bool="true"/>
+          </Record>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="capService.Products/productID">
+        <Annotation Term="Common.Label" String="Product ID"/>
+      </Annotations>
+      <Annotations Target="capService.Products/productName">
+        <Annotation Term="Common.Label" String="Product Name"/>
+      </Annotations>
+      <Annotations Target="capService.Products/quantityPerUnit">
+        <Annotation Term="Common.Label" String="Quantity Per Unit"/>
+      </Annotations>
+      <Annotations Target="capService.Products/unitPrice">
+        <Annotation Term="Common.Label" String="Unit Price"/>
+      </Annotations>
+      <Annotations Target="capService.Products/unitsInStock">
+        <Annotation Term="Common.Label" String="Units In Stock"/>
+      </Annotations>
+      <Annotations Target="capService.Products/unitsOnOrder">
+        <Annotation Term="Common.Label" String="Units On Order"/>
+      </Annotations>
+      <Annotations Target="capService.Products/reorderLevel">
+        <Annotation Term="Common.Label" String="Reorder Level"/>
+      </Annotations>
+      <Annotations Target="capService.Products/discontinued">
+        <Annotation Term="Common.Label" String="Discontinued"/>
+      </Annotations>
+      <Annotations Target="capService.Products/to_Supplier">
+        <Annotation Term="Common.Label" String="Supplier"/>
+      </Annotations>
+      <Annotations Target="capService.Products/to_Supplier_supplierID">
+        <Annotation Term="Common.Label" String="Supplier"/>
+        <Annotation Term="Common.ValueList">
+          <Record Type="Common.ValueListType">
+            <PropertyValue Property="Label" String="Supplier"/>
+            <PropertyValue Property="CollectionPath" String="Suppliers"/>
+            <PropertyValue Property="Parameters">
+              <Collection>
+                <Record Type="Common.ValueListParameterInOut">
+                  <PropertyValue Property="LocalDataProperty" PropertyPath="to_Supplier_supplierID"/>
+                  <PropertyValue Property="ValueListProperty" String="supplierID"/>
+                </Record>
+                <Record Type="Common.ValueListParameterDisplayOnly">
+                  <PropertyValue Property="ValueListProperty" String="companyName"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="capService.Products/to_Category">
+        <Annotation Term="Common.Label" String="Category"/>
+      </Annotations>
+      <Annotations Target="capService.Products/to_Category_categoryID">
+        <Annotation Term="Common.ValueListWithFixedValues" Bool="true"/>
+        <Annotation Term="Common.Label" String="Category"/>
+        <Annotation Term="Common.ValueList">
+          <Record Type="Common.ValueListType">
+            <PropertyValue Property="Label" String="Category"/>
+            <PropertyValue Property="CollectionPath" String="Categories"/>
+            <PropertyValue Property="Parameters">
+              <Collection>
+                <Record Type="Common.ValueListParameterInOut">
+                  <PropertyValue Property="LocalDataProperty" PropertyPath="to_Category_categoryID"/>
+                  <PropertyValue Property="ValueListProperty" String="categoryID"/>
+                </Record>
+                <Record Type="Common.ValueListParameterDisplayOnly">
+                  <PropertyValue Property="ValueListProperty" String="categoryName"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="capService.Products/IsActiveEntity">
+        <Annotation Term="UI.Hidden" Bool="true"/>
+      </Annotations>
+      <Annotations Target="capService.Products/HasActiveEntity">
+        <Annotation Term="UI.Hidden" Bool="true"/>
+      </Annotations>
+      <Annotations Target="capService.Products/HasDraftEntity">
+        <Annotation Term="UI.Hidden" Bool="true"/>
+      </Annotations>
+      <Annotations Target="capService.Products/DraftAdministrativeData">
+        <Annotation Term="UI.Hidden" Bool="true"/>
+      </Annotations>
+      <Annotations Target="capService.Suppliers">
+        <Annotation Term="UI.SelectionFields">
+          <Collection>
+            <PropertyPath>supplierID</PropertyPath>
+            <PropertyPath>companyName</PropertyPath>
+            <PropertyPath>contactName</PropertyPath>
+          </Collection>
+        </Annotation>
+        <Annotation Term="UI.SelectionVariant">
+          <Record Type="UI.SelectionVariantType">
+            <PropertyValue Property="SelectOptions">
+              <Collection>
+                <Record Type="UI.SelectOptionType">
+                  <PropertyValue Property="PropertyName" PropertyPath="contactTitle"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+        <Annotation Term="UI.PresentationVariant">
+          <Record Type="UI.PresentationVariantType">
+            <PropertyValue Property="Visualizations">
+              <Collection>
+                <AnnotationPath>@UI.LineItem</AnnotationPath>
+              </Collection>
+            </PropertyValue>
+            <PropertyValue Property="SortOrder">
+              <Collection>
+                <Record Type="Common.SortOrderType">
+                  <PropertyValue Property="Property" PropertyPath="supplierID"/>
+                  <PropertyValue Property="Descending" Bool="false"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+        <Annotation Term="UI.LineItem">
+          <Collection>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="supplierID"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="companyName"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="contactTitle"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="contactName"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="address"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="city"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="region"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="country"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="postalCode"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="phone"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="fax"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="homePage"/>
+            </Record>
+          </Collection>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="capService.EntityContainer/Suppliers">
+        <Annotation Term="UI.SelectionVariant">
+          <Record Type="UI.SelectionVariantType">
+            <PropertyValue Property="SelectOptions">
+              <Collection>
+                <Record Type="UI.SelectOptionType">
+                  <PropertyValue Property="PropertyName" PropertyPath="contactTitle"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+        <Annotation Term="UI.PresentationVariant">
+          <Record Type="UI.PresentationVariantType">
+            <PropertyValue Property="Visualizations">
+              <Collection>
+                <AnnotationPath>@UI.LineItem</AnnotationPath>
+              </Collection>
+            </PropertyValue>
+            <PropertyValue Property="SortOrder">
+              <Collection>
+                <Record Type="Common.SortOrderType">
+                  <PropertyValue Property="Property" PropertyPath="supplierID"/>
+                  <PropertyValue Property="Descending" Bool="false"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="capService.Suppliers/supplierID">
+        <Annotation Term="Common.Label" String="Supplier ID"/>
+      </Annotations>
+      <Annotations Target="capService.Suppliers/companyName">
+        <Annotation Term="Common.Label" String="Company Name"/>
+      </Annotations>
+      <Annotations Target="capService.Suppliers/contactName">
+        <Annotation Term="Common.Label" String="Contact Name"/>
+      </Annotations>
+      <Annotations Target="capService.Suppliers/contactTitle">
+        <Annotation Term="Common.Label" String="Contact Title"/>
+      </Annotations>
+      <Annotations Target="capService.Suppliers/address">
+        <Annotation Term="Common.Label" String="Address"/>
+      </Annotations>
+      <Annotations Target="capService.Suppliers/city">
+        <Annotation Term="Common.Label" String="City"/>
+      </Annotations>
+      <Annotations Target="capService.Suppliers/region">
+        <Annotation Term="Common.Label" String="Region"/>
+      </Annotations>
+      <Annotations Target="capService.Suppliers/postalCode">
+        <Annotation Term="Common.Label" String="Postal Code"/>
+      </Annotations>
+      <Annotations Target="capService.Suppliers/country">
+        <Annotation Term="Common.Label" String="Country"/>
+      </Annotations>
+      <Annotations Target="capService.Suppliers/phone">
+        <Annotation Term="Common.Label" String="Phone"/>
+      </Annotations>
+      <Annotations Target="capService.Suppliers/fax">
+        <Annotation Term="Common.Label" String="Fax"/>
+      </Annotations>
+      <Annotations Target="capService.Suppliers/homePage">
+        <Annotation Term="Common.Label" String="HomePage"/>
+      </Annotations>
+      <Annotations Target="capService.Categories">
+        <Annotation Term="UI.SelectionFields">
+          <Collection>
+            <PropertyPath>categoryID</PropertyPath>
+            <PropertyPath>categoryName</PropertyPath>
+          </Collection>
+        </Annotation>
+        <Annotation Term="UI.LineItem">
+          <Collection>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="categoryID"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="categoryName"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="description"/>
+            </Record>
+          </Collection>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="capService.EntityContainer/Categories">
+        <Annotation Term="Capabilities.DeleteRestrictions">
+          <Record Type="Capabilities.DeleteRestrictionsType">
+            <PropertyValue Property="Deletable" Bool="false"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Capabilities.InsertRestrictions">
+          <Record Type="Capabilities.InsertRestrictionsType">
+            <PropertyValue Property="Insertable" Bool="false"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions">
+          <Record Type="Capabilities.UpdateRestrictionsType">
+            <PropertyValue Property="Updatable" Bool="false"/>
+          </Record>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="capService.Categories/categoryID">
+        <Annotation Term="Common.Label" String="Category ID"/>
+      </Annotations>
+      <Annotations Target="capService.Categories/categoryName">
+        <Annotation Term="Common.Label" String="Category Name"/>
+      </Annotations>
+      <Annotations Target="capService.Categories/description">
+        <Annotation Term="Common.Label" String="Description"/>
+      </Annotations>
+      <Annotations Target="capService.DraftAdministrativeData">
+        <Annotation Term="Common.Label" String="Draft Administrative Data"/>
+      </Annotations>
+      <Annotations Target="capService.DraftAdministrativeData/DraftUUID">
+        <Annotation Term="UI.Hidden" Bool="true"/>
+        <Annotation Term="Common.Label" String="Draft (Technical ID)"/>
+      </Annotations>
+      <Annotations Target="capService.DraftAdministrativeData/CreationDateTime">
+        <Annotation Term="Common.Label" String="Draft Created On"/>
+      </Annotations>
+      <Annotations Target="capService.DraftAdministrativeData/CreatedByUser">
+        <Annotation Term="Common.Label" String="Draft Created By"/>
+      </Annotations>
+      <Annotations Target="capService.DraftAdministrativeData/DraftIsCreatedByMe">
+        <Annotation Term="UI.Hidden" Bool="true"/>
+        <Annotation Term="Common.Label" String="Draft Created By Me"/>
+      </Annotations>
+      <Annotations Target="capService.DraftAdministrativeData/LastChangeDateTime">
+        <Annotation Term="Common.Label" String="Draft Last Changed On"/>
+      </Annotations>
+      <Annotations Target="capService.DraftAdministrativeData/LastChangedByUser">
+        <Annotation Term="Common.Label" String="Draft Last Changed By"/>
+      </Annotations>
+      <Annotations Target="capService.DraftAdministrativeData/InProcessByUser">
+        <Annotation Term="Common.Label" String="Draft In Process By"/>
+      </Annotations>
+      <Annotations Target="capService.DraftAdministrativeData/DraftIsProcessedByMe">
+        <Annotation Term="UI.Hidden" Bool="true"/>
+        <Annotation Term="Common.Label" String="Draft In Process By Me"/>
+      </Annotations>
+    </Schema>
+  </DataServices>
+</Edmx>

@@ -1,0 +1,52 @@
+{
+	"Controls": [
+		{
+			"_Type": "Control.Type.SectionedTable",
+			"_Name": "SectionedTable0",
+			"Sections": [
+				{
+					"_Type": "Section.Type.ButtonTable",
+					"_Name": "SectionButtonTable0",
+					"Visible": true,
+					"EmptySection": {
+						"FooterVisible": false
+					},
+					"Buttons": [
+						{
+							"_Name": "SectionButton1",
+							"Title": "ES5 - Employees",
+							"TextAlignment": "center",
+							"Visible": true,
+							"OnPress": "/MDKLearning/Actions/NavToEmployee_List.action"
+						},
+						{
+							"_Name": "SectionButton0",
+							"Title": "CAPM - Supplier",
+							"TextAlignment": "center",
+							"Visible": true,
+							"OnPress": "/MDKLearning/Actions/NavToSupplier.action"
+						}
+					]
+				}
+			],
+			"OnRendered": "/MDKLearning/Actions/Service/LoadES5Service.action"
+		}
+	],
+	"_Type": "Page",
+	"_Name": "Main",
+	"Caption": "Main",
+	"PrefersLargeCaption": true,
+	"ToolBar": {
+		"Items": [
+			{
+				"_Type": "Control.Type.ToolbarItem",
+				"_Name": "LogoutToolbarItem",
+				"Caption": "Logout",
+				"Enabled": true,
+				"Visible": true,
+				"Clickable": true,
+				"OnPress": "/MDKLearning/Actions/Logout.action"
+			}
+		]
+	}
+}

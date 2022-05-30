@@ -1,0 +1,13 @@
+{
+	"_Type": "Action.Type.ODataService.Initialize",
+	"OnFailure": "/MDKLearning/Actions/Service/InitializeOnlineFailureMessage.action",
+	"OnSuccess": "/MDKLearning/Actions/Service/InitializeOnlineSuccessMessage.action",
+	"Service": "/MDKLearning/Services/CAPM_NORTHWIND.service",
+	"DefiningRequests": [
+		{
+			"Name": "",
+			"Query": "",
+			"AutomaticallyRetrievesStreams": false
+		}
+	]
+}

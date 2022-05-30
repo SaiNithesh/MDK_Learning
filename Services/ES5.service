@@ -1,0 +1,7 @@
+{
+	"DestinationName": "ES5",
+	"PathSuffix": "/sap/opu/odata/sap/SEPMRA_OVW/",
+	"OfflineEnabled": false,
+	"SourceType": "Cloud",
+	"RestService": false
+}

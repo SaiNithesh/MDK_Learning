@@ -1,0 +1,5 @@
+{
+	"_Type": "Action.Type.Navigation",
+	"PageToOpen": "/MDKLearning/Pages/Employees_List.page",
+	"NavigationType": "Inner"
+}

@@ -1,0 +1,5 @@
+{
+	"_Type": "Action.Type.Navigation",
+	"PageToOpen": "/MDKLearning/Pages/Suppliers_List.page",
+	"NavigationType": "Inner"
+}

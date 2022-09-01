@@ -1,30 +1,60 @@
 {
-	"Caption": "Main",
 	"Controls": [
 		{
-			"_Name": "SectionedTable0",
 			"_Type": "Control.Type.SectionedTable",
-			"Sections": []
+			"_Name": "SectionedTable0",
+			"Sections": [
+				{
+					"_Type": "Section.Type.ButtonTable",
+					"_Name": "SectionButtonTable0",
+					"Visible": true,
+					"EmptySection": {
+						"FooterVisible": false
+					},
+					"Buttons": [
+						{
+							"_Name": "SectionButton0",
+							"Title": "ES5 - Booking Collection",
+							"TextAlignment": "center",
+							"Visible": true,
+							"OnPress": "/MDKLearningApp/Actions/NavToBooking_List.action"
+						},
+						{
+							"_Name": "SectionButton1",
+							"Title": "CAPM - Suppliers",
+							"TextAlignment": "center",
+							"Visible": true,
+							"OnPress": "/MDKLearningApp/Actions/NavToSupplier_List.action"
+						}
+					]
+				}
+			]
 		}
 	],
-	"_Name": "Main",
 	"_Type": "Page",
+	"_Name": "Main",
+	"Caption": "Main",
+	"PrefersLargeCaption": true,
 	"ToolBar": {
 		"Items": [
 			{
-				"_Name": "LogoutToolbarItem",
 				"_Type": "Control.Type.ToolbarItem",
+				"_Name": "LogoutToolbarItem",
 				"Caption": "Logout",
+				"Enabled": true,
+				"Visible": true,
+				"Clickable": true,
 				"OnPress": "/MDKLearningApp/Actions/Logout.action"
 			},
 			{
-				"_Name": "UploadToolbarItem",
 				"_Type": "Control.Type.ToolbarItem",
+				"_Name": "UploadToolbarItem",
 				"Caption": "Sync",
-				"OnPress": "/MDKLearningApp/Actions/Service/SyncStartedMessage.action",
-				"Visible": "$(PLT,true,true,false)"
+				"Enabled": true,
+				"Visible": "$(PLT,true,true,false)",
+				"Clickable": true,
+				"OnPress": "/MDKLearningApp/Actions/Service/SyncStartedMessage.action"
 			}
 		]
-	},
-	"PrefersLargeCaption": true
+	}
 }

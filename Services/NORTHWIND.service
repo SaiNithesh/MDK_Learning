@@ -1,0 +1,6 @@
+{
+	"DestinationName": "Northwind",
+	"PathSuffix": "/v4/Northwind/Northwind.svc/",
+	"OfflineEnabled": false,
+	"SourceType": "Cloud"
+}

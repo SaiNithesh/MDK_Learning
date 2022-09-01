@@ -12,8 +12,18 @@
 			},
 			"Destination": [
 				{
+					"CF": "CAPM_NORTHWIND",
+					"MDK": "CAPM_NORTHWIND",
+					"URL": ""
+				},
+				{
 					"CF": "ES5",
 					"MDK": "ES5",
+					"URL": ""
+				},
+				{
+					"CF": "Northwind",
+					"MDK": "Northwind",
 					"URL": ""
 				}
 			],

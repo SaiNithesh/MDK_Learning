@@ -1,0 +1,5 @@
+{
+	"_Type": "Action.Type.Navigation",
+	"PageToOpen": "/MDKLearningApp/Pages/BookingCollection_List.page",
+	"NavigationType": "Inner"
+}

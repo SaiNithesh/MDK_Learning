@@ -1,0 +1,58 @@
+{
+	"Controls": [
+		{
+			"_Type": "Control.Type.SectionedTable",
+			"_Name": "SectionedTable0",
+			"Sections": [
+				{
+					"_Type": "Section.Type.ContactCell",
+					"Target": {
+						"Service": "/MDKLearningApp/Services/ES5.service",
+						"EntitySet": "BookingCollection",
+						"QueryOptions": "$orderby=bookid"
+					},
+					"_Name": "SectionContactCell0",
+					"Visible": true,
+					"EmptySection": {
+						"FooterVisible": false
+					},
+					"DataPaging": {
+						"ShowLoadingIndicator": false,
+						"PageSize": 50
+					},
+					"ContactCell": {
+						"ContextMenu": {
+							"PerformFirstActionWithFullSwipe": true,
+							"Items": [
+							]
+						},
+						"DetailImage": "",
+						"Headline": "{PASSNAME}",
+						"Subheadline": "{CUSTOMID}",
+						"Description": "{fldate}",
+						"ActivityItems": [
+							{
+								"_Name": "SectionContactCell0ActivityItems0",
+								"ActivityType": "Message",
+								"ActivityValue": "{CLASS}"
+							},
+							{
+								"_Name": "SectionContactCell0ActivityItems1",
+								"ActivityType": "Detail",
+								"ActivityValue": "{FORCURAM} {FORCURKEY}"
+							}
+						]
+					},
+					"Search": {
+						"Enabled": true,
+						"BarcodeScanner": true
+					}
+				}
+			]
+		}
+	],
+	"_Type": "Page",
+	"_Name": "BookingCollection_List",
+	"Caption": "Bookings",
+	"PrefersLargeCaption": true
+}
